@@ -1,0 +1,32 @@
+.nav-container {
+    display: flex;
+    align-items: center;    
+    gap:1.5rem;
+    padding: 0.75rem 1.5rem;
+    background-color: #1e1e1e;
+}
+
+.anchor-nav{
+    color:whitesmoke;
+    text-decoration: none;
+    font-size: 1rem;
+}
+.anchor-nav:hover{
+    color:#ba56e9
+}
+
+.logo{
+    width:8rem;
+}
+.cart-widget{
+    margin-left: auto;
+    display:flex;
+    align-items: center;
+    gap:0.4rem;
+    color: #f5f5f5;
+}
+.cart-icon{
+    width:1.5rem;
+    filter:invert(1)
+}
+
