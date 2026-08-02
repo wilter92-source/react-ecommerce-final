@@ -3,9 +3,11 @@ import { useContext } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import { CartContext } from '../context/CartContext'
+import { getOfferPricing } from '../utils/offerPricing'
 
 const Item = ({ prod }) => {
   const { addItem } = useContext(CartContext)
+  const { isOffer, oldPrice, discount } = getOfferPricing(prod)
 
   const handleAdd = () => {
     addItem(prod, 1)
@@ -13,8 +15,8 @@ const Item = ({ prod }) => {
 
   return (
     <article className="card urban-card h-100 position-relative">
-      {prod.discount && (
-        <span className="discount-badge"><strong>-{prod.discount}%</strong><small>DESC.</small></span>
+      {isOffer && discount && (
+        <span className="discount-badge" aria-label={`${discount}% de descuento`}>-{discount}%</span>
       )}
       <div className="product-image-wrapper position-relative">
         <Link to={`/item/${prod.id}`}>
@@ -28,7 +30,7 @@ const Item = ({ prod }) => {
         <small className="category-label">{prod.category}</small>
         <h2 className="card-title h5 mt-2">{prod.title}</h2>
         <div className="mb-3">
-          {prod.oldPrice && <span className="old-price">${prod.oldPrice}</span>}
+          {isOffer && oldPrice && <span className="old-price">${oldPrice}</span>}
           <p className="price mb-0">${prod.price}</p>
         </div>
         <Link to={`/item/${prod.id}`} className="btn btn-dark rounded-pill mt-auto">Ver producto</Link>

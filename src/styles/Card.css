@@ -6,10 +6,14 @@
 .card-title {font-weight:800; min-height:48px;}
 .price {font-size:1.35rem; font-weight:800; color:#ff7a00;}
 .old-price {text-decoration:line-through;color:#999;margin-right:8px;}
-.discount-badge {position:absolute;top:14px;left:14px;background:#ff7a00;color:#fff;font-weight:800;font-size:.8rem;border-radius:50%;width:56px;height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.05;text-align:center;z-index:2;} .discount-badge small {font-size:.55rem;display:block;}
+.discount-badge {position:absolute;top:14px;left:14px;background:#ff7a00;color:#fff;font-weight:800;font-size:.82rem;border-radius:50%;width:56px;height:56px;display:flex;align-items:center;justify-content:center;line-height:1;white-space:nowrap;text-align:center;z-index:2;}
 .category-label {color:#777;font-weight:600;}
 .btn-dark {background:#111;border:0;}
 
 .product-image-wrapper { position:relative; }
 .cart-plus-button { position:absolute; right:18px; bottom:18px; width:42px; height:42px; border-radius:50%; border:0; background:#ff7a00; color:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer; opacity:0; transition:.2s ease; }
 .urban-card:hover .cart-plus-button { opacity:1; }
+
+.detail-discount-badge { position:static; display:inline-flex; margin-bottom:1rem; }
+.detail-price-block { margin-bottom:1rem; }
+.detail-price-block .old-price { display:block; margin-bottom:.15rem; }

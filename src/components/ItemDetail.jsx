@@ -2,10 +2,12 @@ import { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { CartContext } from '../context/CartContext'
 import ItemCount from './ItemCount'
+import { getOfferPricing } from '../utils/offerPricing'
 
 const ItemDetail = ({ detail }) => {
   const [activeImage, setActiveImage] = useState(detail.images?.[0])
   const { addItem, getItemQty } = useContext(CartContext)
+  const { isOffer, oldPrice, discount } = getOfferPricing(detail)
 
   const handleAdd = (qty) => {
     addItem(detail, qty)
@@ -23,11 +25,16 @@ const ItemDetail = ({ detail }) => {
           </div>
         </div>
         <div className="col-lg-5">
-          {detail.category === 'ofertas' && <span className="discount-badge">OFERTA</span>}
+          {isOffer && discount && (
+            <span className="discount-badge detail-discount-badge" aria-label={`${discount}% de descuento`}>-{discount}%</span>
+          )}
           <small className="text-muted">{detail.category}</small>
           <h1>{detail.title}</h1>
           <p>{detail.description}</p>
-          <h2 className="price">${Number(detail.price).toFixed(2)}</h2>
+          <div className="detail-price-block">
+            {isOffer && oldPrice && <span className="old-price">${oldPrice}</span>}
+            <h2 className="price">${Number(detail.price).toFixed(2)}</h2>
+          </div>
           {getItemQty(detail.id) === 0 && (
             <ItemCount stock={detail.stock} onAdd={handleAdd}/>
           )}
