@@ -1,11 +1,17 @@
-import React from 'react'
+import { Link } from 'react-router-dom'
+import { useContext } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
+import { CartContext } from '../context/CartContext'
 
 const CartWidget = () => {
+  const { cartQty } = useContext(CartContext)
+
   return (
-    <div className='cart-widget'>
-        <img src='https://cdn-icons-png.flaticon.com/512/263/263142.png' alt='carrito' className='cart-icon'/>
-        <span>5</span>
-    </div>
+    <Link to="/cart" className="cart-widget" aria-label="Carrito">
+      <FontAwesomeIcon icon={faCartShopping} />
+      {cartQty() > 0 && <span className="cart-badge">{cartQty()}</span>}
+    </Link>
   )
 }
 

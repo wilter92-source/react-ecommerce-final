@@ -1,46 +1,45 @@
-import React, { useState } from 'react'
-import ItemCount from './ItemCount'
-//4. USAR EL CONTEXTO
-//NECESITO UN HOOK DE REACT (USECONTEXT)
-//IMPORTO EL CONTEXTO QUE QUIERO USAR
-import { useContext } from 'react'
-import { CartContext } from '../context/CartContext'
+import { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { CartContext } from '../context/CartContext'
+import ItemCount from './ItemCount'
 
-const ItemDetail = ({detail}) => {
-// const context = useContext(CartContext)
-// console.log(context)
-const [purchased, setPurchased]= useState(false)
-const { addItem, getItemQty} = useContext(CartContext)
+const ItemDetail = ({ detail }) => {
+  const [activeImage, setActiveImage] = useState(detail.images?.[0])
+  const { addItem, getItemQty } = useContext(CartContext)
 
-const availableStock = detail.stock - getItemQty(detail.id)
-  const onAdd = (cantidad)=> {
-    addItem(detail, cantidad)
-    setPurchased(true)
+  const handleAdd = (qty) => {
+    addItem(detail, qty)
   }
 
   return (
-    <div
-    style={{
-        textAlign: 'center',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: '10px'
-      }}>
-        <h2>Detalle de: {detail.name}</h2>
-        <img src={detail.img} alt={detail.name}/>
-        <p>{detail.description}</p>
-        <p>${detail.price},00</p>
-        <p>stock: {availableStock} unidades disponibles</p>
-       { purchased 
-       ? <div className='d-flex justify-content-between align-items-center p-4 w-25'>
-        <Link className='btn btn-dark' to='/'>Seguir Comprando</Link>
-        <Link className='btn btn-dark' to='/cart'>Ir al Carrito</Link>
-       </div> 
-       : <ItemCount stock={availableStock} onAdd={onAdd}/>
-       }
+    <main className="container py-5 product-detail">
+      <div className="row g-5">
+        <div className="col-lg-7">
+          <img className="detail-main-image" src={activeImage || detail.image} alt={detail.title}/>
+          <div className="d-flex gap-3 mt-3">
+            {(detail.images || []).map((img) => (
+              <img key={img} onClick={() => setActiveImage(img)} className="detail-thumb" src={img} alt={detail.title}/>
+            ))}
+          </div>
+        </div>
+        <div className="col-lg-5">
+          {detail.category === 'ofertas' && <span className="discount-badge">OFERTA</span>}
+          <small className="text-muted">{detail.category}</small>
+          <h1>{detail.title}</h1>
+          <p>{detail.description}</p>
+          <h2 className="price">${Number(detail.price).toFixed(2)}</h2>
+          {getItemQty(detail.id) === 0 && (
+            <ItemCount stock={detail.stock} onAdd={handleAdd}/>
+          )}
+          {getItemQty(detail.id) > 0 && (
+            <div className="detail-actions mt-4 d-flex gap-3">
+              <Link className="btn btn-warning" to="/cart">Ver carrito</Link>
+              <Link className="btn btn-outline-dark" to="/">Seguir comprando</Link>
+            </div>
+          )}
+        </div>
       </div>
+    </main>
   )
 }
 

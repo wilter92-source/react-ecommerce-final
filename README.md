@@ -1,16 +1,34 @@
-# React + Vite
+# Urban Store - Proyecto Final React JS
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+E-commerce desarrollado con React JS como proyecto final integrador.
 
-Currently, two official plugins are available:
+## Tecnologías utilizadas
+- React JS
+- React Router
+- Context API para gestión global del carrito
+- Firebase Firestore como base de datos
+- Vite como entorno de desarrollo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Funcionalidades principales
+- Catálogo dinámico de productos desde Firestore.
+- Filtrado por categorías.
+- Vista detalle de producto.
+- Carrito con cantidades, subtotales y total.
+- Checkout con registro de órdenes en Firestore.
+- Actualización de stock al completar una compra.
 
-## React Compiler
+## Ejecución local
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Instalar dependencias:
 
-## Expanding the ESLint configuration
+```bash
+npm install
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Ejecutar proyecto:
+
+```bash
+npm run dev
+```
+
+Variables de Firebase deben configurarse mediante `.env`.

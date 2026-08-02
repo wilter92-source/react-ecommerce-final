@@ -1,43 +1,71 @@
-import React, { useEffect, useState } from 'react'
-import { getProducts } from '../mock/data'
-import ItemList from './ItemList'
+import { useEffect, useState } from 'react'
+import { collection, getDocs, query, where } from 'firebase/firestore'
 import { useParams } from 'react-router-dom'
+import { db } from '../firebase/config'
+import ItemList from './ItemList'
 import LoadingComponent from './LoadingComponent'
-const ItemListContainer = ({greeting}) => {
-  const [data, setData]= useState([])
-  const [loading, setLoading]= useState(false)
-  const {type}= useParams()
-console.log(type)
-  useEffect(()=>{
-    setLoading(true)
-    //1. PEDIR DATOS
-    getProducts()
-    .then((res)=> {
-      if(type){
-        //filtro
-        setData(res.filter((prod)=> prod.category === type))
-      }else{
-        //no filtro
-        setData(res)
-      }
-    })//trato la promesa
-    .catch((error)=> console.log(error))//atrapo el error
-    .finally(()=> setLoading(false))
-  },[type])
-   console.log(data, 'data')
-  return (
-    <div>
-      {
-        loading 
-        ? <LoadingComponent text={type ?'Cargando categoría...' : 'Cargando productos...'}/>
-        :<>
-        <h1>{greeting}</h1>
-        <ItemList data={data}/>
 
-      </>
-      
+const ItemListContainer = ({ greeting }) => {
+  const [data, setData] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+  const { type } = useParams()
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      setLoading(true)
+      setError('')
+
+      try {
+        const productsRef = collection(db, 'products')
+        const productsQuery = type
+          ? query(productsRef, where('category', '==', type))
+          : productsRef
+
+        const snapshot = await getDocs(productsQuery)
+        const products = snapshot.docs.map((document) => ({
+          id: document.id,
+          ...document.data(),
+        }))
+
+        setData(products)
+      } catch (firebaseError) {
+        console.error('Error al leer los productos:', firebaseError)
+        setError('No pudimos cargar los productos. Revisa la conexión y las reglas de Firestore.')
+      } finally {
+        setLoading(false)
       }
-    </div>
+    }
+
+    loadProducts()
+  }, [type])
+
+  if (loading) {
+    return (
+      <LoadingComponent
+        text={type ? 'Cargando categoría...' : 'Cargando productos...'}
+      />
+    )
+  }
+
+  return (
+    <main className="container py-5">
+      <h1 className="mb-5 fw-bold">
+        {type ? `${greeting}${type}` : greeting}
+      </h1>
+
+      {error ? (
+        <div className="alert alert-danger" role="alert">
+          {error}
+        </div>
+      ) : data.length > 0 ? (
+        <ItemList data={data} />
+      ) : (
+        <div className="alert alert-info" role="status">
+          No hay productos disponibles en esta categoría.
+        </div>
+      )}
+    </main>
   )
 }
 
