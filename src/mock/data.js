@@ -138,6 +138,8 @@ export const products = [
     "stock": 20,
     "price": 55,
     "category": "ofertas",
+    "oldPrice": 85,
+    "discount": 35,
     "images": [
       "https://res.cloudinary.com/ngtujbed/image/upload/v1785619698/11-02_ai8k6r.png",
       "https://res.cloudinary.com/ngtujbed/image/upload/v1785619697/11-01_tnxr4v.png",
@@ -151,6 +153,8 @@ export const products = [
     "stock": 20,
     "price": 75,
     "category": "ofertas",
+    "oldPrice": 100,
+    "discount": 25,
     "images": [
       "https://res.cloudinary.com/ngtujbed/image/upload/v1785619700/12-02_jzoaot.png",
       "https://res.cloudinary.com/ngtujbed/image/upload/v1785619700/12-01_tw1srm.png",

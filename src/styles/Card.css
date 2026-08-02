@@ -6,7 +6,7 @@
 .card-title {font-weight:800; min-height:48px;}
 .price {font-size:1.35rem; font-weight:800; color:#ff7a00;}
 .old-price {text-decoration:line-through;color:#999;margin-right:8px;}
-.discount-badge {position:absolute;top:14px;left:14px;background:#ff7a00;color:#fff;font-weight:800;font-size:.85rem;border-radius:50%;width:48px;height:48px;display:flex;align-items:center;justify-content:center;z-index:2;}
+.discount-badge {position:absolute;top:14px;left:14px;background:#ff7a00;color:#fff;font-weight:800;font-size:.8rem;border-radius:50%;width:56px;height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.05;text-align:center;z-index:2;} .discount-badge small {font-size:.55rem;display:block;}
 .category-label {color:#777;font-weight:600;}
 .btn-dark {background:#111;border:0;}
 

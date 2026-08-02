@@ -14,7 +14,7 @@ const Item = ({ prod }) => {
   return (
     <article className="card urban-card h-100 position-relative">
       {prod.discount && (
-        <span className="discount-badge">-{prod.discount}%</span>
+        <span className="discount-badge"><strong>-{prod.discount}%</strong><small>DESC.</small></span>
       )}
       <div className="product-image-wrapper position-relative">
         <Link to={`/item/${prod.id}`}>

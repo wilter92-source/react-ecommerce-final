@@ -41,11 +41,18 @@ export const CartProvider = ({ children }) => {
 
   const decreaseQuantity = (id) => {
     setCart((currentCart) =>
-      currentCart.map((product) =>
-        product.id === id
-          ? { ...product, quantity: Math.max(product.quantity - 1, 1) }
-          : product,
-      ),
+      currentCart.reduce((updatedCart, product) => {
+        if (product.id !== id) {
+          updatedCart.push(product)
+          return updatedCart
+        }
+
+        if (product.quantity > 1) {
+          updatedCart.push({ ...product, quantity: product.quantity - 1 })
+        }
+
+        return updatedCart
+      }, []),
     )
   }
 
